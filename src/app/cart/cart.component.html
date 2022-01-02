@@ -3,7 +3,6 @@
     <div fxFlex="33%" fxFlex.xs="50%" fxFlex.sm="50%" *ngFor=" let dish of dishes">
       <ng-container [ngTemplateOutlet]="dishCard" [ngTemplateOutletContext]="{dish: dish}"></ng-container>
     </div>
-    <div *ngIf="!dishes.length">Cart is empty!</div>
   </div>
 </div>
 

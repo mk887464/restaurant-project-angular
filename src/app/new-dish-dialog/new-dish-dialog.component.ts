@@ -8,8 +8,6 @@ import {Dish} from "../shared/Dish";
 
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CurrencyEnum} from "../shared/CurrencyEnum";
-import { FakeDataService } from '../services/fake-data.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-dish-dialog',
@@ -34,7 +32,7 @@ export class NewDishDialogComponent implements OnInit {
 
   dishForm: FormGroup | undefined;
 
-  constructor(private dialogRef: MatDialogRef<NewDishDialogComponent>, private fb: FormBuilder, private fakeService: FakeDataService, private router: Router) {
+  constructor(private dialogRef: MatDialogRef<NewDishDialogComponent>, private fb: FormBuilder) {
     this.types = Object.values(KitchenTypeEnum);
     this.categories = Object.values(CategoryEnum);
     this.currencies = Object.values(CurrencyEnum);
@@ -92,9 +90,6 @@ export class NewDishDialogComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     let dish = new Dish(form.value.name, form.value.type, form.value.category, this.ingredients, form.value.maxCount, form.value.price, form.value.description, this.images, form.value.currency);
-    
-    this.fakeService.addNewDish(Object.assign({},dish))
-    this.router.navigateByUrl("/dishes")
-    //this.dialogRef.close(dish);
+    this.dialogRef.close(dish);
   }
 }

@@ -1,6 +1,6 @@
 <div>
   <header class="row-1" fxLayout="row">
-    <!-- <button mat-raised-button class ="mat-raised-button-0" color="primary" (click)="openNewDishDialog()">Dodaj nowe danie</button> -->
+    <button mat-raised-button class ="mat-raised-button-0" color="primary" (click)="openNewDishDialog()">Dodaj nowe danie</button>
     <ng-multiselect-dropdown class="dropdown-1"
       [placeholder]="'Typ kuchni'"
       [settings]="dropdownSettings!"
@@ -47,26 +47,16 @@
       <mat-form-field appearance="standard" class ="form-field">
         <input matInput type="number" placeholder="Do" [formControl]="to" (input)="priceChanged()">
       </mat-form-field>
-      <!-- <button mat-raised-button class ="mat-raised-button-1" color="primary" routerLink="/cart">Koszyk</button> -->
+      <button mat-raised-button class ="mat-raised-button-1" color="primary" routerLink="/cart">Koszyk</button>
     </div>
   </header>
 
   <h3 class="total" [ngClass]="{'orange': getCartSum() < 10, 'blue': getCartSum() >= 10}">Sumaryczna ilość zarezerwowanych dań: {{getCartSum()}}</h3>
 
   <div class="outer" fxLayoutGap="25px grid">
-    <ng-container *ngIf="(dishes | slice:paginacja.Start:paginacja.Koniec) as dishesPag">
-      <div class = "grid" *ngFor=" let dish of dishesPag">
-        <ng-container *ngIf="!dish.deleted">
-          <ng-container [ngTemplateOutlet]="dishCard" [ngTemplateOutletContext]="{dish: dish}"></ng-container>
-        </ng-container>
-      </div>
-    </ng-container>
-    
-    
-  </div>
-  <div>
-    <app-paginacja [elementAmount]="dishes.length" [iloscNaStronie]="6" 
-      (startElement)="getStartElement($event)" (endElement)="getEndElement($event)"></app-paginacja>
+    <div class = "grid" *ngFor=" let dish of dishes">
+      <ng-container [ngTemplateOutlet]="dishCard" [ngTemplateOutletContext]="{dish: dish}"></ng-container>
+    </div>
   </div>
 </div>
 
@@ -79,7 +69,7 @@
       </mat-card-title>
       <mat-card-subtitle>{{dish.category}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="{{dish.photos[0]}}" alt="Dish photo" [routerLink]="'/dish/' + dish.name">
+    <img mat-card-image src="{{dish.photos[0]}}" alt="Dish photo">
     <mat-card-content>
       <h2>Kuchnia: {{dish.type | uppercase}}</h2>
       <p>
@@ -87,12 +77,12 @@
       </p>
       <div class="container-rating">
         <p>Ocena: {{dish.rating}}</p>
-        <!-- <ng-rating-bar class="rating-bar"
+        <ng-rating-bar class="rating-bar"
           *ngIf="!dish.alreadyRated"
           [value]="0"
           (valueChange)="onRatingValueChange($event, dish.name)"
           [ratingCount]="5"
-        ></ng-rating-bar> -->
+        ></ng-rating-bar>
       </div>
       <p *ngIf="dish.maxCount - getCountInCart(dish.name) > 0" [ngClass]="{'low': dish.maxCount - getCountInCart(dish.name) <= 5}">Dostępne: {{dish.maxCount - getCountInCart(dish.name)}}</p>
       <p *ngIf="dish.maxCount - getCountInCart(dish.name) == 0" class="low">Niedostępne</p>
@@ -102,7 +92,7 @@
       <h2 class="count-in-cart" >{{getCountInCart(dish.name)}}</h2>
       <button mat-icon-button color="warn" (click)="removeFromCart(dish.name)" [disabled]="getCountInCart(dish.name) === 0"><mat-icon>remove_circle_outline</mat-icon></button>
 
-      <button mat-icon-button (click)="removeDish(dish)">
+      <button mat-icon-button (click)="removeDish(dish.name)">
         <mat-icon>delete</mat-icon>
       </button>
 

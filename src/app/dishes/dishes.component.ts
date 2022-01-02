@@ -7,9 +7,6 @@ import {KitchenTypeEnum} from "../shared/KitchenTypeEnum";
 import {CategoryEnum} from "../shared/CategoryEnum";
 import {FormControl} from "@angular/forms";
 import {FakeDataService} from "../services/fake-data.service";
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { doc, deleteDoc } from "firebase/firestore";
 
 @Component({
   selector: 'app-dishes',
@@ -18,7 +15,7 @@ import { doc, deleteDoc } from "firebase/firestore";
 })
 export class DishesComponent implements OnInit {
 
-  dishes: any[] = [];
+  dishes: Dish[];
 
   dropdownTypesList = [];
   selectedTypesItems = [];
@@ -38,34 +35,8 @@ export class DishesComponent implements OnInit {
   from = new FormControl('', );
   to = new FormControl('', );
 
-  paginacja = {
-    Start: 0,
-    Koniec: 6,
-  }
-
-  getStartElement(event: number): void{
-    this.paginacja.Start = event;
-  }
-
-  getEndElement(event: number): void{
-    this.paginacja.Koniec = event;
-  }
-
-  constructor(public dialog: MatDialog, private fakeDataService:FakeDataService, private firestore: AngularFirestore, private router: Router) {
-    //this.dishes = 
-    this.firestore.collectionGroup("dish").valueChanges().subscribe(dishes=>{
-      this.dishes = dishes
-      this.firestore.collectionGroup("dish").get().subscribe(res=>{
-        this.dishes.forEach((d,i)=>{
-          d.id = res.docs[i].id
-        })
-        this.dishes = this.dishes.filter(d=>!d.deleted)
-      })
-      this.updateData()
-    })
-
-
-    
+  constructor(public dialog: MatDialog, private fakeDataService:FakeDataService) {
+    this.dishes = fakeDataService.getDishes();
   }
 
 
@@ -111,37 +82,9 @@ export class DishesComponent implements OnInit {
     });
   }
 
-  removeDish(dish: any) {
-    //const ref = this.firestore.collection('dish')
-
-    //deleteDoc(doc(db, "cities", "DC"));
-    // hobqAQxQlwMHpmS5uKfP
-    this.fakeDataService.removeDish(dish.name);
-    this.firestore.collection("dish").doc(dish.id).update({ deleted: true}).then(r=>{
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-        this.router.navigate(["/dishes"]));
-    })
+  removeDish(name: string) {
+    this.fakeDataService.removeDish(name);
     this.updateData();
-    // .then((r) => {
-    //   console.log(r)
-    //   console.log("Document successfully deleted!");
-    //   // this.router.navigateByUrl("/dishes")
-    // }).catch((error) => {
-    //   console.error("Error removing document: ", error);
-    // });
-    //ref.doc().delete()
-    //const batch = this.firestore.batch()
-    // this.firestore.collection("dish").ref.where("name", "==", dish.name).get().then(res=>{
-
-    // })
-    // .delete().then(() => {
-    //   console.log("Document successfully deleted!");
-    // }).catch((error) => {
-    //     console.error("Error removing document: ", error);
-    // });
-    //console.log(this.dishes)
-    //this.fakeDataService.removeDish(name);
-    //this.updateData();
   }
 
   getCountInCart(name: string){
@@ -213,30 +156,25 @@ export class DishesComponent implements OnInit {
   }
 
   applyFilters(){
-    //this.dishes = this.fakeDataService.getDishes();
-    this.fakeDataService.getDishes().subscribe((dishes: any) => {
-      this.dishes = dishes
+    this.dishes = this.fakeDataService.getDishes();
 
-      if(this.selectedTypesItems.length > 0) {
-        // @ts-ignore
-        this.dishes = this.dishes.filter(d => this.selectedTypesItems.find(st => st.item_text === d.type) !== undefined);
-      }
-      if(this.selectedCategoriesItems.length > 0) {
-        // @ts-ignore
-        this.dishes = this.dishes.filter(d => this.selectedCategoriesItems.find(st => st.item_text === d.category) !== undefined);
-      }
-      console.log(this.selectedRatingItems);
-      if(this.selectedRatingItems.length > 0) {
-        // @ts-ignore
-        this.dishes = this.dishes.filter(d => this.selectedRatingItems.find(st => st.item_text === d.rating) !== undefined);
-      }
-  
-      if(this.from.value > 0 && this.to.value > this.from.value){
-        this.dishes = this.dishes.filter(d => d.price >= this.from.value && d.price <= this.to.value );
-      }
+    if(this.selectedTypesItems.length > 0) {
+      // @ts-ignore
+      this.dishes = this.dishes.filter(d => this.selectedTypesItems.find(st => st.item_text === d.type) !== undefined);
+    }
+    if(this.selectedCategoriesItems.length > 0) {
+      // @ts-ignore
+      this.dishes = this.dishes.filter(d => this.selectedCategoriesItems.find(st => st.item_text === d.category) !== undefined);
+    }
+    console.log(this.selectedRatingItems);
+    if(this.selectedRatingItems.length > 0) {
+      // @ts-ignore
+      this.dishes = this.dishes.filter(d => this.selectedRatingItems.find(st => st.item_text === d.rating) !== undefined);
+    }
 
-    })
-    
+    if(this.from.value > 0 && this.to.value > this.from.value){
+      this.dishes = this.dishes.filter(d => d.price >= this.from.value && d.price <= this.to.value );
+    }
 
   }
 
