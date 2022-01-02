@@ -1,0 +1,38 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>
+        <p>{{dish?.name | uppercase}}</p>
+        <p>{{dish?.price}} {{dish?.currency}}</p>
+      </mat-card-title>
+      <mat-card-subtitle>{{dish?.category}}</mat-card-subtitle>
+    </mat-card-header>
+    <img *ngFor="let photo of dish?.photos" mat-card-image [src]="photo" class="det-photo" alt="Dish photo">
+    <mat-card-content>
+      <h2>Kuchnia: {{dish?.type | uppercase}}</h2>
+      <p>
+        {{dish?.description}}
+      </p>
+      <div class="container-rating">
+        <p id="rating" >Ocena: {{dish?.rating}}</p>
+        <ng-rating-bar class="rating-bar"
+          *ngIf="!dish?.alreadyRated"
+          [value]="0"
+          (valueChange)="onRatingValueChange($event, dish?.name)"
+          [ratingCount]="5"
+        ></ng-rating-bar>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="mat-card-actions-1" >
+        <button mat-icon-button color="primary" (click)="addToCart(dish)" [disabled]="dish?.maxCount - getCountInCart(dish?.name) === 0"><mat-icon>add_circle_outline</mat-icon></button>
+        <h2 class="count-in-cart" >{{getCountInCart(dish?.name)}}</h2>
+        <button mat-icon-button color="warn" (click)="removeFromCart(dish?.name)" [disabled]="getCountInCart(dish?.name) === 0"><mat-icon>remove_circle_outline</mat-icon></button>
+  
+        <!-- <button mat-icon-button (click)="removeDish(dish.name)">
+          <mat-icon>delete</mat-icon>
+        </button> -->
+  
+      </mat-card-actions>
+</mat-card>
+<app-dish-reviews [reviews]="reviews"></app-dish-reviews>
+<h2>Nowa ocena <button mat-raised-button color="warn" type="submit" (click)="addReviewVisible = !addReviewVisible">+</button></h2>
+<app-dish-review (added)="onAdded($event)" *ngIf="addReviewVisible"></app-dish-review>

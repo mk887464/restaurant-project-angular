@@ -11,10 +11,10 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { NewDishDialogComponent } from './new-dish-dialog/new-dish-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from "@angular/material/select";
-import {MatOptionModule} from "@angular/material/core";
+import {MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,13 +22,30 @@ import { NgRatingBarModule } from 'ng-rating-bar';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CartComponent } from './cart/cart.component';
 import {RouterModule} from "@angular/router";
+import { MenuComponent } from './menu/menu.component';
+import { DishDetailComponent } from './dish-detail/dish-detail.component';
+import { HomeComponent } from './home/home.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { PaginacjaComponent } from './paginacja/paginacja.component';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule} from '@angular/fire/compat'
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { DishReviewComponent } from './dish-review/dish-review.component';
+import { DishReviewsComponent } from './dish-reviews/dish-reviews.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
     AppComponent,
     DishesComponent,
     NewDishDialogComponent,
-    CartComponent
+    CartComponent,
+    MenuComponent,
+    DishDetailComponent,
+    HomeComponent,
+    PaginacjaComponent,
+    DishReviewComponent,
+    DishReviewsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,24 +57,27 @@ import {RouterModule} from "@angular/router";
     MatIconModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatDatepickerModule,
     MatSelectModule,
+    MatNativeDateModule,
     MatOptionModule,
     MatInputModule,
     MatChipsModule,
+    MatToolbarModule,
     ReactiveFormsModule,
     NgRatingBarModule,
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
-    RouterModule.forRoot([
-      {path: '', component: DishesComponent},
-      {
-        path: 'cart',
-        component: CartComponent
-      }
-    ])
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'mytestapp'),
+    AngularFireDatabaseModule, // Only required for database features
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })

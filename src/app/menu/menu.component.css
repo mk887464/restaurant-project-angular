@@ -1,0 +1,40 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+a:hover, a:active{
+    color: rgb(211, 211, 211);
+}
+.navigation-items{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+mat-toolbar{
+    display: flex;
+    flex-direction: row;
+    border-radius: 3px;
+    background-color: rgb(0, 0, 0);
+    margin-bottom: 4rem;
+}
+
+
+@media(max-width: 959px){
+    mat-toolbar{
+        border-radius: 0px;
+    }
+}
+
+mat-toolbar .left{
+    margin-left: auto;
+}
+.line{
+    position: absolute;
+    margin-top: 7rem;
+    width: 93%;
+    padding: 4px;
+    background-color: black;
+}
