@@ -1,0 +1,28 @@
+<div>
+  <div fxLayout="row wrap" fxLayoutGap="25px grid">
+    <div fxFlex="33%" fxFlex.xs="50%" fxFlex.sm="50%" *ngFor=" let dish of dishes">
+      <ng-container [ngTemplateOutlet]="dishCard" [ngTemplateOutletContext]="{dish: dish}"></ng-container>
+    </div>
+    <div *ngIf="!dishes.length">Cart is empty!</div>
+  </div>
+</div>
+
+<ng-template #dishCard let-dish='dish'>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{dish.name}}</mat-card-title>
+      <mat-card-subtitle>{{dish.category}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{dish.photos[0]}}" alt="Dish photo">
+    <mat-card-content>
+      <p>
+        {{dish.description}}
+      </p>
+      <div class="rate">
+        <p>Ocena: {{dish.rating}}</p>
+      </div>
+      <p>W koszyku: {{getCountInCart(dish.name)}}</p>
+    </mat-card-content>
+  </mat-card>
+
+</ng-template>

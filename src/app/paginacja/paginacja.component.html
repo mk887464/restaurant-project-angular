@@ -1,0 +1,45 @@
+<nav>
+  <ul class="pagination" *ngIf="elementAmount > iloscNaStronie">
+    <li class="page-item" (click)="changePage(0)">
+        <span class="page-link" href="#" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+        </span>
+    </li>
+    <li class="page-item" (click)="page > 0 ? changePage(page-1) : null">
+            <span class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+            </span>
+        </li>
+    <li class="page-item center-1" *ngIf="elementAmount > iloscDoWyswietlenia" (click)="changePage(0)" >
+        <span class="page-link" href="#" aria-label="First">
+            <span aria-hidden="true">1</span>
+        </span>
+    </li>
+    <li class="page-item" *ngIf="elementAmount > iloscDoWyswietlenia">
+        <span class="page-link" href="#">
+            <span aria-hidden="true">...</span>
+        </span>
+    </li>
+    <li class="page-item active center">
+        <span class="page-link" href="#" >{{page + 1}}</span>
+    </li>
+    <li class="page-item" *ngIf="elementAmount > iloscDoWyswietlenia">
+        <span class="page-link" href="#">
+            <span aria-hidden="true">...</span>
+        </span>
+    </li>    
+    <li class="page-item center" *ngIf="elementAmount > iloscDoWyswietlenia" (click)="changePage(iloscStron - 1)">
+        <span class="page-link" href="#" >{{iloscStron}}</span>
+    </li>
+    <li class="page-item" (click)="page < (iloscStron - 1) ? changePage(page + 1) : null">
+        <span class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&rsaquo;</span>
+        </span>
+    </li>
+    <li class="page-item" (click)="changePage(iloscStron - 1)">
+        <span class="page-link" href="#" aria-label="Last">
+            <span aria-hidden="true">&raquo;</span>
+        </span>
+    </li> 
+  </ul>
+</nav>

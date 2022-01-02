@@ -1,0 +1,88 @@
+<h2>Nowe danie</h2>
+
+<form fxLayout="column" [formGroup]="dishForm!" (ngSubmit)="onSubmit(dishForm!)">
+
+<mat-form-field appearance="outline">
+  <mat-label>Nazwa</mat-label>
+  <input matInput required formControlName="name">
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Typ kuchni</mat-label>
+  <mat-select [(value)]="selectedType" required formControlName="type">
+    <mat-option *ngFor="let type of types" [value]="type">
+      {{type}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Kategoria</mat-label>
+  <mat-select [(value)]="selectedCategory" required formControlName="category">
+    <mat-option *ngFor="let category of categories" [value]="category">
+      {{category}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Składniki</mat-label>
+  <mat-chip-list #chipList aria-label="Lista składników">
+    <mat-chip *ngFor="let ingredient of ingredients" removable selected (removed)="removeIngredient(ingredient)">
+      {{ingredient}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    <input placeholder="Nowy składnik..."
+           [matChipInputFor]="chipList"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           matChipInputAddOnBlur
+           (matChipInputTokenEnd)="addIngredient($event)">
+  </mat-chip-list>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Maksymalna liczba</mat-label>
+  <input matInput type="number" required formControlName="maxCount">
+</mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Waluta</mat-label>
+    <mat-select [(value)]="selectedCurrency" required formControlName="currency">
+      <mat-option *ngFor="let currency of currencies" [value]="currency">
+        {{currency}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Cena</mat-label>
+  <input matInput type="number" required formControlName="price">
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Opis</mat-label>
+  <textarea class="text-area" required rows="5" matInput formControlName="description"></textarea>
+</mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Zdjęcia</mat-label>
+    <mat-chip-list #imagesList aria-label="Lista zdjęć">
+      <mat-chip *ngFor="let image of images" removable selected (removed)="removeImage(image)">
+        {{image}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input placeholder="Nowe zdjęcie..."
+             [matChipInputFor]="imagesList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             matChipInputAddOnBlur
+             (matChipInputTokenEnd)="addImage($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <button mat-raised-button color="warn" type="submit" [disabled]="isNotCompleted()">Dodaj</button>
+
+</form>

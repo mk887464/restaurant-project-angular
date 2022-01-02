@@ -1,0 +1,130 @@
+.example-card {
+  width: 400px;
+}
+
+.example-card img{
+  height: 300px;
+}
+
+:host ::ng-deep .total{
+  border-radius: 5px;
+  text-align: center;}
+
+.price{
+  margin-left: 4em; 
+  margin-right: 2em; 
+  margin-top: 1.5em;
+}
+
+header{
+  margin-bottom: 2em;
+}
+
+.low{
+  color: orangered;
+}
+
+.mostExpensive{
+  border: 2px solid green;
+}
+
+:host ::ng-deep .mat-raised-button{
+  text-align: center;
+}
+
+.cheapest{
+  border: 2px solid red;
+}
+
+.orange{
+  background-color: orange;
+}
+
+.blue{
+  background-color: cornflowerblue;
+}
+
+:host ::ng-deep .outer{
+  display: grid;
+  grid-template-columns: repeat(3,33%);
+}
+
+  :host ::ng-deep .dropdown-1{
+    width: 200px; 
+    margin-left: 2em;
+  }
+
+  :host ::ng-deep .dropdown-2{
+    width: 200px; 
+    margin-left: 4em
+  }
+
+  :host ::ng-deep .dropdown-3{
+    width: 200px; 
+    margin-left: 4em
+  }
+
+  :host ::ng-deep .form-field{
+    margin-left: 2em;
+  }
+  :host ::ng-deep .mat-raised-button-1{
+    text-align: center;
+  }
+  :host ::ng-deep .mat-raised-button{
+    margin-left: 2em;
+  }
+
+  :host ::ng-deep .rating-bar{
+    margin-left: auto;
+  }
+
+  :host ::ng-deep .container-rating{
+    display: flex;
+  }
+
+  :host ::ng-deep .mat-card-actions-1{
+    display: flex;
+  }
+
+  :host ::ng-deep .count-in-cart{
+    margin-top: 0.2em;
+  }
+
+  @media screen and (max-width: 1300px) {
+    :host ::ng-deep .outer{
+      display: grid;
+      grid-template-columns: repeat(2,50%);
+      column-gap: 5px;
+      grid-template-rows: auto;
+    }
+
+    :host ::ng-deep .row-1{
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+
+  @media screen and (max-width: 850px) {
+    :host ::ng-deep .outer{
+      display: grid;
+      grid-template-columns: repeat(1,100%);
+      grid-template-rows: auto;
+    }
+
+    .example-card {
+      width: 90%;
+    }
+
+    :host ::ng-deep .mat-raised-button-0{
+      word-wrap: break-word;
+    }
+
+    :host ::ng-deep .row-1 .dropdown-1,.dropdown-2,.dropdown-3,.price-container,.price{
+      width: 80%;
+      display: inline;
+      margin-top: 2%;
+      margin-bottom: 5%;
+      margin-left: 2em
+    }
+  }

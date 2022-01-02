@@ -1,0 +1,46 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html,
+body {
+  height: 100%;
+  background-color: white;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.content {
+  padding: 2em;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+  background: rgb(211, 211, 211);
+  opacity: 0.75 !important;
+}
+
+.box-border-shadow{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn{
+  font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+mat-slide-toggle{
+  margin-bottom: 1em;
+}
+
+.table-actions-button{
+  color: #3fb53f;
+  transition: all .1s ease-in-out;
+}
+
+.table-actions-button:hover{
+  transform: scale(1.5);
+  color: #ead80b;
+}
+
