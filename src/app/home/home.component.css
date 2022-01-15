@@ -34,6 +34,7 @@ header{
     color: white;
     text-align: right;
     font-style: italic;
+    margin-right: 13rem;
 
 }
 .title-image{
@@ -120,5 +121,9 @@ img{
     }
     .quote-box{
         width: 80%;
+    }
+
+    .caption{
+        margin-right: 0;
     }
 }

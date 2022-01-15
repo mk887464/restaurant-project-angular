@@ -236,8 +236,6 @@ export class DishesComponent implements OnInit {
       }
 
     })
-    
-
   }
 
   getCartSum(){
